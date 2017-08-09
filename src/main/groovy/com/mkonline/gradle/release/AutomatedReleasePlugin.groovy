@@ -2,7 +2,6 @@ package com.mkonline.gradle.release
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.tasks.GradleBuild
 
 
 /**
@@ -14,11 +13,10 @@ class AutomatedReleasePlugin implements Plugin<Project> {
     static final String RELEASE_GROUP = 'Release'
 
     private AutomatedReleaseExtension extension
-    private Map<String, Object> attributes = [:]
 
     @Override
     void apply(Project project) {
-        extension = project.extensions.create('automateRelease', AutomatedReleaseExtension, project, attributes)
+        extension = project.extensions.create('automateRelease', AutomatedReleaseExtension, project)
 
         project.task('packageAndRelease', description: 'Verify project, release, and update version to next.',
                 group: RELEASE_GROUP) doLast this.&verifyVersion

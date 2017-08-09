@@ -8,15 +8,14 @@ import org.gradle.api.Project
 class AutomatedReleaseExtension {
 
     private Project project
-    private Map<String, Object> attributes
 
     String packagingType;
 
-    AutomatedReleaseExtension(Project project, Map<String, Object> attributes) {
-        this.attributes = attributes
+    AutomatedReleaseExtension(Project project) {
         this.project = project
-        ExpandoMetaClass mc = new ExpandoMetaClass(AutomatedReleaseExtension, false, true)
+/*        ExpandoMetaClass mc = new ExpandoMetaClass(AutomatedReleaseExtension, false, true)
         mc.initialize()
         metaClass = mc
+        */
     }
 }

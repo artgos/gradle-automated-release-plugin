@@ -1,0 +1,28 @@
+buildscript {
+    repositories {
+
+        maven {
+            name "release"
+            url "https://arttest.jfrog.io/arttest/libs-release"
+        }
+        maven {
+            name "snapshot"
+            url "https://arttest.jfrog.io/arttest/libs-snapshot"
+        }
+
+
+        mavenLocal()
+        jcenter()
+        mavenCentral()
+
+    }
+    dependencies {
+        //classpath "org.ajoberstar:gradle-git:1.7.1"
+    }
+
+}
+
+apply plugin: 'groovy'
+apply plugin: 'idea'
+//apply plugin: 'org.ajoberstar.release-opinion'
+apply from: "$rootDir/gradle/publishing.gradle"

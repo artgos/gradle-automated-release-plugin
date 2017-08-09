@@ -1,0 +1,85 @@
+buildscript {
+    repositories {
+
+        maven {
+            name "release"
+            url "https://arttest.jfrog.io/arttest/libs-release"
+        }
+        maven {
+            name "snapshot"
+            url "https://arttest.jfrog.io/arttest/libs-snapshot"
+        }
+
+
+        mavenLocal()
+        jcenter()
+        mavenCentral()
+
+    }
+    dependencies {
+        classpath 'net.researchgate:gradle-release:2.6.0'
+    }
+
+}
+
+apply plugin: net.researchgate.release.ReleasePlugin
+//apply plugin: 'base'
+apply plugin: 'maven'
+
+afterReleaseBuild.dependsOn { pushImage }
+
+release {
+    failOnCommitNeeded = true
+    failOnPublishNeeded = true
+    failOnSnapshotDependencies = true
+    failOnUnversionedFiles = true
+    failOnUpdateNeeded = true
+    revertOnFail = true
+    preCommitText = ''
+    preTagCommitMessage = '[Gradle Release Plugin] - pre tag commit: '
+    tagCommitMessage = '[Gradle Release Plugin] - creating tag: '
+    newVersionCommitMessage = '[Gradle Release Plugin] - new version commit: '
+    tagTemplate = '${version}'
+    versionPropertyFile = 'gradle.properties'
+    versionProperties = []
+    buildTasks = ['build']
+
+    scmAdapters = [
+            net.researchgate.release.GitAdapter
+    ]
+
+    git {
+        requireBranch = 'development'
+        pushToRemote = 'origin'
+        pushToBranchPrefix = ''
+        commitVersionFileOnly = false
+        signTag = false
+    }
+}
+
+allprojects {
+    afterEvaluate { project ->
+        uploadArchives {
+            repositories {
+                mavenDeployer {
+                    pom.packaging = project.packaging
+                    pom.groupId = project.group
+                    pom.version = project.version
+                    pom.artifactId = project.artifactid
+
+                    if(project.version.endsWith('-SNAPSHOT')) {
+                        repository(url: 'https://arttest.jfrog.io/arttest/libs-snapshot-local') {
+                            authentication(userName: RepoUsernameProp, password: repoPasswordProp);
+                        }
+                    }
+                    else {
+                        repository(url: 'https://arttest.jfrog.io/arttest/libs-release-local') {
+                            authentication(userName: RepoUsernameProp, password: repoPasswordProp);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}

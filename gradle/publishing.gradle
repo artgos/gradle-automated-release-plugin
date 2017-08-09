@@ -26,7 +26,7 @@ apply plugin: net.researchgate.release.ReleasePlugin
 //apply plugin: 'base'
 apply plugin: 'maven'
 
-afterReleaseBuild.dependsOn { pushImage }
+afterReleaseBuild.dependsOn { uploadArchives }
 
 release {
     failOnCommitNeeded = true

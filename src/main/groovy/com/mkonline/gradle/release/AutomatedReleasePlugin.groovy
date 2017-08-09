@@ -21,7 +21,7 @@ class AutomatedReleasePlugin implements Plugin<Project> {
         extension = project.extensions.create('automateRelease', AutomatedReleaseExtension, project, attributes)
 
         project.task('packageAndRelease', description: 'Verify project, release, and update version to next.',
-                group: RELEASE_GROUP) doLast this.&verifyVersion()
+                group: RELEASE_GROUP) doLast this.&verifyVersion
     }
 
     void verifyVersion() {

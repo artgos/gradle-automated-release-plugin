@@ -15,7 +15,7 @@ class AutomatedReleaseExtension {
     AutomatedReleaseExtension(Project project, Map<String, Object> attributes) {
         this.attributes = attributes
         this.project = project
-        ExpandoMetaClass mc = new ExpandoMetaClass(ReleaseExtension, false, true)
+        ExpandoMetaClass mc = new ExpandoMetaClass(AutomatedReleaseExtension, false, true)
         mc.initialize()
         metaClass = mc
     }

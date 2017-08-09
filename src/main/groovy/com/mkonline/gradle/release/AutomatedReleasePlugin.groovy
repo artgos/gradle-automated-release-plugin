@@ -16,7 +16,7 @@ class AutomatedReleasePlugin implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
-        extension = project.extensions.create('automateRelease', AutomatedReleaseExtension, project)
+        extension = project.extensions.create('automatedReleaseParams', AutomatedReleaseExtension, project)
 
         project.task('packageAndRelease', description: 'Verify project, release, and update version to next.',
                 group: RELEASE_GROUP) doLast this.&verifyVersion

@@ -29,6 +29,8 @@ class AutomatedReleasePlugin implements Plugin<Project> {
             println '-- RUNNING MAVEN TYPE PKG --'
         } else if ('DOCKER'.equals(extension.packagingType)) {
             println '-- RUNNING DOCKER TYPE PKG --'
+        } else {
+            println '-- RUNNING NONE TYPE PKG --'
         }
     }
 
